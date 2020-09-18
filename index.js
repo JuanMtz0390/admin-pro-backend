@@ -9,18 +9,16 @@ const app = express();
 //CORS
 app.use( cors() );
 
+//Lectura y parseo del body
+app.use( express.json() );
+
 //Base de datos
 dbConnection();
 
 //Rutas
-app.get('/', (req, res) => {
+app.use('/api/usuarios', require('./routes/usuarios') );
+app.use('/api/login', require('./routes/auth') );
 
-    res.json({
-        ok:true,
-        msg: "hola mundo"
-    });
-
-});
 
 app.listen( process.env.PORT, () => {
     console.log('Servidor corriendo en puerto' + 3000 );
@@ -28,4 +26,4 @@ app.listen( process.env.PORT, () => {
 
 
 // mean_user
-// jy73EbUXrG9ZNGgB
+// jy73EbUXrG9ZNGgB 7Jiezy6BLxOtJFwC
