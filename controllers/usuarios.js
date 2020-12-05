@@ -4,15 +4,26 @@ const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const { TokenExpiredError } = require('jsonwebtoken');
 const { generarJWT } = require('../helpers/jwt');
+const usuario = require('../models/usuario');
 
 
 const getUsuarios = async(req, res) => {
 
-    const usuarios = await Usuario.find({}, 'nombre email role google');
+    const desde = Number(req.query.desde) || 0;
+
+    const [usuarios, total ] = await Promise.all([
+        usuario
+            .find({}, 'nombre email role google img')
+            .skip( desde )
+            .limit( 5 ),
+        
+        usuario.countDocuments()
+    ]);
 
     res.json({
         ok: true,
-        usuarios
+        usuarios,
+        total
     });
 
 }
