@@ -23,7 +23,9 @@ router.post('/',
 
 router.put('/:id',[
 
-       
+    validarJWT,
+    check('nombre', 'El nombre es necesario').not().isEmpty(),
+    validarCampos
 
     ],
     actualizarMedico
@@ -31,6 +33,7 @@ router.put('/:id',[
 
 router.delete('/:id',[
 
+    validarJWT
         
     ],
     borrarMedico
